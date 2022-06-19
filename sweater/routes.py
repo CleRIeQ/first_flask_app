@@ -1,3 +1,4 @@
+import flask_login
 from flask import render_template, redirect, request, flash, Blueprint
 from flask_login import login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -6,9 +7,10 @@ from sweater.models import UserModel, db
 app_route = Blueprint('app_route', __name__)
 
 
-@app_route.route("/profile/<username>/")
+@app_route.route("/profile")
 def profile_page():
-    return render_template("profile.html")
+    some = flask_login.current_user.username
+    return render_template("profile.html", some=some)
 
 
 @app_route.route("/register", methods=("POST", "GET"))
